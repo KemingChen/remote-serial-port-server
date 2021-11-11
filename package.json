@@ -13,14 +13,28 @@
     "vtest": "cls && test\\test.bat -v"
   },
   "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "app-module-path": "^2.2.0",
     "body-parser": "~1.8.1",
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
     "ejs": "~0.8.5",
     "express": "~4.9.0",
+    "koa": "^2.13.4",
+    "koa-body": "^4.2.0",
+    "koa-compress": "^5.1.0",
+    "koa-logger": "^3.2.1",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^10.1.1",
+    "lodash": "^4.17.21",
     "morgan": "^1.4.0",
+    "raw-body": "^2.4.1",
     "remote-serial-port-client": "^0.4.0",
     "request": "^2.81.0",
     "semaphore": "^1.0.5",
     "serialport": "^7.1.5",
+    "split": "^1.0.1",
+    "tracer": "^1.1.5",
     "ws": "^2.3.1"
   },
   "repository": {
