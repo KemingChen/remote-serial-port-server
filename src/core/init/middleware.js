@@ -5,6 +5,9 @@ const KoaBody = require('koa-body');
 const compress = require('koa-compress');
 const getRawBody = require('raw-body');
 const zlib = require('zlib');
+const util = require('util');
+//
+const getRawBodySync = util.promisify(getRawBody);
 
 module.exports = ({ app }) => {
     // eslint-disable-next-line no-param-reassign
@@ -23,19 +26,10 @@ module.exports = ({ app }) => {
     app.use(KoaCores());
     app.use(async (ctx, next) => {
         if (/application\/octet-stream/.test(ctx.req.headers['content-type'])) {
-            getRawBody(ctx.req, {
-                length: ctx.req.headers['content-length'],
-            }, (err, buffer) => {
-                if (err) {
-                    next(err);
-                } else {
-                    ctx.rawBody = buffer;
-                    next();
-                }
-            })
-        } else {
-            next();
+            const buffer = await getRawBodySync(ctx.req);
+            ctx.rawBody = buffer;
         }
+        await next();
     });
     app.use(KoaBody({
         multipart: true,
