@@ -73,6 +73,9 @@ module.exports = function (config) {
             const sp = new SerialPort(name, options);
             sp.open((err) => {
                 if (err) {
+                    try {
+                        sp.close();
+                    } catch { }
                     reject("Error opening serial port: " + err.message);
                 }
             });
@@ -95,10 +98,10 @@ module.exports = function (config) {
                     port.sem_read.take(() => {
                         //Append data to the rxbuffer
                         const position = port.rxindex;
-                        const overflow = position >= port.rxcapacity;
+                        let overflow = position >= port.rxcapacity;
                         if (!overflow) {
                             const available = port.rxcapacity - position;
-                            const length = data.length;
+                            let length = data.length;
                             overflow = length > available;
                             length = overflow ? available : length;
                             data.copy(port.rxbuffer, position, 0, length);
